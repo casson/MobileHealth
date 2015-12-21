@@ -31,37 +31,41 @@ public class RegisterActivity extends Activity {
         uPwd=(EditText)findViewById(R.id.pwd);
         uPhone=(EditText)findViewById(R.id.phone);
 
-        final String id="001";
         final String name = uName.getText().toString();
         final String pwd = uPwd.getText().toString();
         final String phone = uPhone.getText().toString();
 
+        regist=(Button)findViewById(R.id.registe);
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(name.equals("") ||pwd.equals("")||phone.equals("")) {
-                    Toast.makeText(getApplicationContext(), "������������Ϣ", Toast.LENGTH_SHORT).show();
+                if(name=="" ||pwd==""||phone=="") {
+                    Toast.makeText(getApplicationContext(), "请确保您的信息不为空", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    if(checkPhone(phone)&&checkName(name)&&(name.length()<=20)) {
-                        //��ע��ʱ��д�����ݷ��͵���������
-                        String result = NetworkFunction.ConnectServer("http://123.56.85.58:8080/MobileHealth/user/add.action",
-                                new String[]{"userId", "password", "userName", "phoneNumber"}, new String[]{id, pwd, name, phone});
-                        if (result.equals("true")) {
+                    if(checkPhone(phone)) {
+                        //传将数据发送到服务器
+                        String result = NetworkFunction.ConnectServer("http://192.168.202.103/MobileHealth/user/add.action",
+                                new String[]{ "password", "userName", "phoneNum"}, new String[]{pwd, name, phone});
+                        if (result=="true") {
+                            Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             intent.putExtra("login", phone);
                             startActivity(intent);
                         }
+                        else{
+                            Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "�������������", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
     }
 
-    //�жϵ绰�����Ƿ���ȷ
+    //检查手机号
     public boolean checkPhone(String phone){
         Pattern pattern = Pattern.compile("^13/d{9}||15[8,9]/d{8}$");
         Matcher matcher = pattern.matcher(phone);
@@ -72,7 +76,7 @@ public class RegisterActivity extends Activity {
             return false;
         }
     }
-    //�ж��û����Ƿ�Ϊ������λ�������ֺ���ĸ���
+    /*//检查密码
     public boolean checkName(String name){
         Pattern pattern = Pattern.compile("^[0-9A-Za-z]{6,}$");
         Matcher matcher = pattern.matcher(name);
@@ -82,7 +86,7 @@ public class RegisterActivity extends Activity {
         else {
             return false;
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

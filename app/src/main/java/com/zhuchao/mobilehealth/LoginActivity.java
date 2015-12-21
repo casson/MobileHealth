@@ -36,9 +36,8 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (phone.equals("") || password.equals("")) {
-                    Toast.makeText(getApplicationContext(), "������������Ϣ", Toast.LENGTH_SHORT).show();
-                } else {
-                    //����¼ʱ��д�����ݷ��͵���������
+                    Toast.makeText(getApplicationContext(), "请确保信息不为空", Toast.LENGTH_SHORT).show();
+                } else{
                     String result = NetworkFunction.ConnectServer("http://123.56.85.58:8080/MobileHealth/user/add.action",
                             new String[]{"phoneNumber", "password"}, new String[]{phone, password});
                     if (result.equals("true")) {
