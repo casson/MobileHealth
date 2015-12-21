@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.zhuchao.http.NetworkFunction;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LoginActivity extends Activity {
 
     private EditText phone;
@@ -35,16 +38,35 @@ public class LoginActivity extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
                 if (phone.equals("") || password.equals("")) {
                     Toast.makeText(getApplicationContext(), "请确保信息不为空", Toast.LENGTH_SHORT).show();
                 } else{
-                    String result = NetworkFunction.ConnectServer("http://123.56.85.58:8080/MobileHealth/user/add.action",
-                            new String[]{"phoneNumber", "password"}, new String[]{phone, password});
-                    if (result.equals("true")) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("login", phone);
-                        startActivity(intent);
-                    }
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            //传将数据发送到服务器
+                            String result = NetworkFunction.ConnectServer("http://192.168.202.103/MobileHealth/user/add.action",
+                                    new String[]{ "password", "phoneNum"}, new String[]{password,phone});
+
+                            //解析返回的json数据
+                            try {
+                                JSONObject object=new JSONObject(result);
+                                String info=object.getString("login");
+                                if (info=="true"){
+                                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
                 }
             }
         });

@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.zhuchao.http.NetworkFunction;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,23 +42,39 @@ public class RegisterActivity extends Activity {
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+
                 if(name=="" ||pwd==""||phone=="") {
                     Toast.makeText(getApplicationContext(), "请确保您的信息不为空", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     if(checkPhone(phone)) {
-                        //传将数据发送到服务器
-                        String result = NetworkFunction.ConnectServer("http://192.168.202.103/MobileHealth/user/add.action",
-                                new String[]{ "password", "userName", "phoneNum"}, new String[]{pwd, name, phone});
-                        if (result=="true") {
-                            Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            intent.putExtra("login", phone);
-                            startActivity(intent);
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
-                        }
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                //传将数据发送到服务器
+                                String result = NetworkFunction.ConnectServer("http://192.168.1.108/MobileHealth/user/add.action",
+                                        new String[]{ "password", "userName", "phoneNum"}, new String[]{pwd, name, phone});
+
+                                    //解析返回的json数据
+                                    try {
+                                        JSONObject object=new JSONObject(result);
+                                        String info=object.getString("register");
+                                        if (info=="true"){
+                                            Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                            intent.putExtra("login", phone);
+                                            startActivity(intent);
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                            }
+                        };
                     }
                     else{
                         Toast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
