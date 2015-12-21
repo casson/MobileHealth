@@ -1,4 +1,4 @@
-package com.zhuchao.mobilehealth;
+package com.hcy.mobilehealth;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,18 +8,18 @@ import android.view.MenuItem;
 import com.hcy.mobilehealth.R;
 
 
-public class RegisterActivity extends Activity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_main);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_register, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
