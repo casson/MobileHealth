@@ -21,4 +21,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/androidapi.jar')
+    compile files('libs/libGoogleAnalyticsServices.jar')
 }

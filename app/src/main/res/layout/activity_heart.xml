@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customer="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.zhuchao.mobilehealth.HeartActivity">
+    <com.zhuchao.view_rewrite.HeartCircle
+        android:id="@+id/heartRate"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        customer:circle_color_inside="#ffffff"
+        customer:circle_color_outside="#ff009ce7"
+        customer:text_color="#ff0000"
+        customer:text_size="24sp"
+        />
+    <com.zhuchao.view_rewrite.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_below="@+id/heartRate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ListView
+            android:id="@+id/devices"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="none"/>
+    </com.zhuchao.view_rewrite.PullToRefreshView>
+
+</RelativeLayout>

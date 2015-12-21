@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-import com.hcy.mobilehealth.R;
 import com.zhuchao.http.NetworkFunction;
 
 import java.util.regex.Matcher;
@@ -42,11 +40,11 @@ public class RegisterActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(name.equals("") ||pwd.equals("")||phone.equals("")) {
-                    Toast.makeText(getApplicationContext(), "ÇëÊäÈëÍêÕûÐÅÏ¢", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     if(checkPhone(phone)&&checkName(name)&&(name.length()<=20)) {
-                        //½«×¢²áÊ±ÌîÐ´µÄÊý¾Ý·¢ËÍµ½·þÎñÆ÷¶Ë
+                        //ï¿½ï¿½×¢ï¿½ï¿½Ê±ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         String result = NetworkFunction.ConnectServer("http://123.56.85.58:8080/MobileHealth/user/add.action",
                                 new String[]{"userId", "password", "userName", "phoneNumber"}, new String[]{id, pwd, name, phone});
                         if (result.equals("true")) {
@@ -56,14 +54,14 @@ public class RegisterActivity extends Activity {
                         }
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "ÊäÈë´íÎó£¬ÇëÐÞÕý", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
     }
 
-    //ÅÐ¶Ïµç»°ºÅÂëÊÇ·ñÕýÈ·
+    //ï¿½Ð¶Ïµç»°ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½È·
     public boolean checkPhone(String phone){
         Pattern pattern = Pattern.compile("^13/d{9}||15[8,9]/d{8}$");
         Matcher matcher = pattern.matcher(phone);
@@ -74,7 +72,7 @@ public class RegisterActivity extends Activity {
             return false;
         }
     }
-    //ÅÐ¶ÏÓÃ»§ÃûÊÇ·ñÎªÖÁÉÙÁùÎ»ÇÒÓÉÊý×ÖºÍ×ÖÄ¸×é³É
+    //ï¿½Ð¶ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öºï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
     public boolean checkName(String name){
         Pattern pattern = Pattern.compile("^[0-9A-Za-z]{6,}$");
         Matcher matcher = pattern.matcher(name);

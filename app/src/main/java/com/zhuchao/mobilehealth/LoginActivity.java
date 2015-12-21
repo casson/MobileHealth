@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.hcy.mobilehealth.R;
 import com.zhuchao.http.NetworkFunction;
 
 public class LoginActivity extends Activity {
@@ -37,9 +36,9 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (phone.equals("") || password.equals("")) {
-                    Toast.makeText(getApplicationContext(), "ÇëÊäÈëÍêÕûÐÅÏ¢", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢", Toast.LENGTH_SHORT).show();
                 } else {
-                    //½«µÇÂ¼Ê±ÌîÐ´µÄÊý¾Ý·¢ËÍµ½·þÎñÆ÷¶Ë
+                    //ï¿½ï¿½ï¿½ï¿½Â¼Ê±ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     String result = NetworkFunction.ConnectServer("http://123.56.85.58:8080/MobileHealth/user/add.action",
                             new String[]{"phoneNumber", "password"}, new String[]{phone, password});
                     if (result.equals("true")) {
